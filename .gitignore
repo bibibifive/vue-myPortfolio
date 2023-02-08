@@ -9,7 +9,7 @@ lerna-debug.log*
 
 node_modules
 .DS_Store
-dist
+# dist
 dist-ssr
 coverage
 *.local
@@ -31,7 +31,7 @@ coverage
 # build files
 es/
 lib/
-dist/
+# dist/
 typings/
 _site
 package
