@@ -1,0 +1,27 @@
+@import './base.scss';
+
+#app {
+  width: 100vw;
+  height: 100vh;
+  // margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+a{
+  color: var(--color--text);
+  text-decoration: none;
+  transition: 0.4s;
+}
+
+@media (hover: hover) {
+  a:hover {
+    outline-width: 2px solid blue;
+  }
+}
+
+@media (min-width: 1024px) {
+  #app {
+    flex-direction: column;
+  }
+}
