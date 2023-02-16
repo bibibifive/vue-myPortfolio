@@ -3,6 +3,9 @@
   --color-border: #22222220;
   --color-main: hsla(160, 100%, 37%, 1);
   --color--text: #191919;
+
+  --color-blue: #278cff;
+  --color-blue-light: #a7caeb;
 }
 
 /* semantic color variables for this project
@@ -22,6 +25,7 @@
 *::after {
   box-sizing: border-box;
   margin: 0;
+  padding: 0;
   position: relative;
   font-weight: normal;
 }

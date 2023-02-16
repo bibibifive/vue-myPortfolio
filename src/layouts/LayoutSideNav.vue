@@ -14,7 +14,25 @@ setInterval(() => {
       <div class="block">
         {{ clock.format('YY-MM-DD dddd HH:mm:ss') }}
       </div>
-      <router-link to="/boob">
+      <router-link to="/">
+        <t-menu-item value="home">
+          <template #icon>
+            <t-icon name="home" />
+          </template>
+          首页
+        </t-menu-item>
+      </router-link>
+
+      <router-link to="/todolist">
+        <t-menu-item value="todolist">
+          <template #icon>
+            <t-icon name="bulletpoint" />
+          </template>
+          代办
+        </t-menu-item>
+      </router-link>
+      
+      <router-link to="/calendar">
         <t-menu-item value="calendar">
           <template #icon>
             <t-icon name="calendar" />
@@ -32,14 +50,6 @@ setInterval(() => {
         </t-menu-item>
       </router-link>
 
-      <router-link to="/todolist">
-        <t-menu-item value="todolist">
-          <template #icon>
-            <t-icon name="bulletpoint" />
-          </template>
-          代办
-        </t-menu-item>
-      </router-link>
     </t-menu>
   </t-aside>
 </template>

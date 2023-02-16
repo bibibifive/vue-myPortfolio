@@ -1,59 +1,57 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import LayoutContent from '@/layouts/components/LayoutContent.vue'
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
+import homeVue from '@/views/home.vue'
+import calendarVue from '@/views/calendar.vue'
+import notesVue from '@/views/notes.vue'
+import todolistVue from '@/views/todolist.vue'
 
 // 自动导入modules文件夹下所有ts文件
-const modules = import.meta.glob('./modules/**/*.ts')
+// const modules = import.meta.glob('./modules/**/*.ts')
 
-// 路由暂存
-const routeModuleList = []
+// // 路由暂存
+// const routeModuleList = []
 
-Object.keys(modules).forEach((key) => {
-  const mod = modules[key].default || {}
-  const modList = Array.isArray(mod) ? [...mod] : [mod]
-  routeModuleList.push(...modList)
-})
+// Object.keys(modules).forEach((key) => {
+//   const mod = modules[key].default || {}
+//   const modList = Array.isArray(mod) ? [...mod] : [mod]
+//   routeModuleList.push(...modList)
+// })
 
 // 存放动态路由
-export const asyncRouterList = [...routeModuleList]
+// export const asyncRouterList = [...routeModuleList]
 
 // 存放固定的路由
-const defaultRouterList = [
+const routes = [
   // {
   //   path: '/login',
   //   name: 'login',
-  //   component: () => import('@/pages/login/index.vue'),
+  //   component: () => import('@/views/login/index.vue'),
   // },
   {
     path: '/',
-    name: 'home',
-    component: LayoutContent,
+    component: homeVue,
   },
   {
     path: '/calendar',
-    name: 'todolist',
-    component: () => import('@/pages/calendar.vue'),
+    component: calendarVue,
   },
   {
     path: '/notes',
-    name: 'notes',
-    component: () => import('@/pages/notes.vue'),
+    component: notesVue,
   },
   {
     path: '/todolist',
-    name: 'todolist',
-    component: () => import('@/pages/todolist.vue'),
+    component: todolistVue,
   },
   {
-    path: '/:w+',
-    name: '404Page',
-    component: LayoutContent,
+    path: '/:w*',
+    component: ()=>import('@/views/noFound.vue'),
   },
 ]
 
-const routes = [...defaultRouterList, ...asyncRouterList]
+// const routes = [...defaultRouterList, ...asyncRouterList]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(),
   routes,
   scrollBehavior() {
     return {
