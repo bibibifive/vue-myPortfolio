@@ -1,80 +1,75 @@
 <script setup>
-import { reactive, onMounted, getCurrentInstance } from 'vue'
+import { ref, reactive, onMounted, onBeforeMount, onBeforeUnmount, getCurrentInstance } from 'vue'
+
+// todo: 可修改现有todo
+// todo: 优先级
+// todo: 修改顺序
+// todo: 点击完成todo显示bug
+// todo: 已删除列表(再次删除完全删除) (展开 收纳)
+
+// 申请localStorage空间
+localStorage.ingData == null && localStorage.setItem('ingData', ['提醒我定闹钟', '明天带伞'])
+localStorage.doneData == null && localStorage.setItem('doneData', ['今晚整理衣物'])
+
+console.log('ingData: ', localStorage.ingData.split(','))
+console.log('doneData: ', localStorage.doneData.split(','))
+
+// 双区初始化
+const ingData = reactive(localStorage.ingData == '' ? [] : localStorage.ingData.split(','))
+const doneData = reactive(localStorage.doneData == '' ? [] : localStorage.doneData.split(','))
+// localStorage.clear()
+
+// 添加的代办内容
+let addValue = ref('')
+
+// 刷新前保存修改
+window.addEventListener('beforeunload', (event) => {
+  event.preventDefault()
+  localStorage.setItem('ingData', ingData)
+  localStorage.setItem('doneData', doneData)
+})
+
+// 卸载前时保存修改
+onBeforeUnmount(() => {
+  localStorage.setItem('ingData', ingData)
+  localStorage.setItem('doneData', doneData)
+})
+
 
 onMounted(() => {
-  let refAll = getCurrentInstance().ctx.$refs
-  const addtodo = refAll.addtodo
-
-  addtodo.addEventListener('keypress', e => {
-    if (e.key == 'Enter') {
-      Addtodo()
-    }
-  })
+  // let refAll = getCurrentInstance().ctx.$refs
+  // const addtodo = refAll.addtodo
 })
 
 function Addtodo() {
-  const text = addtodo.value.trim()
+  const text = addValue.value
   if (!text) return
-  ingData.push({ text })
-  addtodo.value = null
+  ingData.push(text)
+  addValue.value = null
 }
-
 
 function zoneSwitch(e, zone) {
   const text = e.currentTarget.nextElementSibling.textContent
   zone.some((v, i) => {
-    if (v.text === text) {
+    if (v === text) {
       zone.splice(i, 1)
       return true
     }
   })
-  if (zone == ingData) doneData.push({ text })
-  else ingData.push({ text })
+  if (zone == ingData) doneData.push(text)
+  else ingData.push(text)
 }
-
-function getText(e) {
-  const text = e.currentTarget.nextElementSibling.textContent
-  return text
-}
-
-
 
 function deleteTodo(e, zone) {
   const text = e.currentTarget.previousElementSibling.textContent
   zone.some((v, i) => {
-    if (v.text === text) {
+    if (v === text) {
       zone.splice(i, 1)
       return true
     }
   })
 }
 
-let ingData = reactive([
-  { text: '提醒我定闹钟', },
-  { text: '明天带伞' },
-])
-let doneData = reactive([
-  { text: '今晚整理衣物' }
-])
-
-const init = () => {
-  // ingData = localStorage.ingData.split(',')
-  // ingData = ingData.filter(v => v.trim())
-  // localStorage.ingData = ingData
-
-  // doneData = localStorage.doneData.split(',')
-  // doneData = doneData.filter(v => v && v.trim())
-  // localStorage.doneData = doneData
-}
-
-// 申请localStorage空间
-document.addEventListener('DOMContentLoaded', () => {
-  localStorage.ingData == null && localStorage.setItem('ingData', ingData)
-  localStorage.doneData == null && localStorage.setItem('doneData', doneData)
-  init()
-  console.log(localStorage.ingData)
-  console.log(localStorage.doneData)
-})
 
 </script>
 
@@ -82,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <div id="app">
     <div class="header">
       <p>ToDolist</p>
-      <input type="text" placeholder="请输入ToDo" id="addtodo" ref="addtodo" />
+      <input @keypress.enter="Addtodo()" v-model.trim="addValue" type="text" placeholder="请输入ToDo" id="addtodo" />
       <button class="add" @click="Addtodo()">添加</button>
     </div>
     <div class="content">
@@ -91,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <ul>
           <li v-for="(todo, index) in ingData" :key="index">
             <input type="checkbox" @click="zoneSwitch($event, ingData)" />
-            <p>{{ todo.text }}</p>
+            <p>{{ todo }}</p>
             <div class="icon" @click="deleteTodo($event, ingData)">
               <svg width="25" height="25" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M15 12L16.2 5H31.8L33 12" stroke="#333" stroke-width="4" stroke-linejoin="round" />
@@ -110,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <ul>
           <li v-for="(todo, index) in doneData" :key="index">
             <input type="checkbox" @click="zoneSwitch($event, doneData)" checked />
-            <p>{{ todo.text }}</p>
+            <p>{{ todo }}</p>
             <div class="icon" @click="deleteTodo($event, doneData)">
               <svg width="25" height="25" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M15 12L16.2 5H31.8L33 12" stroke="#333" stroke-width="4" stroke-linejoin="round" />
@@ -127,14 +122,13 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </template>
 
-
 <style lang="scss" scoped>
 #app {
   position: relative;
   display: flex;
   flex-direction: column;
   font-family: 'pingfang sc', 'Courier New', Courier, monospace;
-  width: 40%;
+  width: 500px;
   height: 100vh;
   overflow-y: scroll;
   margin-left: 10px;
@@ -144,6 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // 全部header
 .header {
   flex-shrink: 0;
+  width: 100%;
   height: 60px;
   padding: 0 5px 0 10px;
   display: flex;
@@ -171,6 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 .content {
   flex-shrink: 1;
+  width: 100%;
   margin: 20px 0 0 5px;
   display: flex;
   flex-direction: column;

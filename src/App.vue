@@ -2,7 +2,11 @@
   <t-layout>
     <layout-side-nav />
     <t-content>
-      <router-view></router-view>
+      <router-view v-slot="{ Component }">
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </router-view>
     </t-content>
   </t-layout>
 </template>
@@ -18,6 +22,8 @@ import LayoutSideNav from '@/layouts/LayoutSideNav.vue'
 // const route = useRoute()
 </script>
 
-<style lang="less" scoped>
-
+<style lang="scss" scoped>
+.t-layout__content {
+  height: 100vh;
+}
 </style>

@@ -3,6 +3,7 @@ import homeVue from '@/views/home.vue'
 import calendarVue from '@/views/calendar.vue'
 import notesVue from '@/views/notes.vue'
 import todolistVue from '@/views/todolist.vue'
+import searchForQQ from '@/views/searchForQQ.vue'
 
 // 自动导入modules文件夹下所有ts文件
 // const modules = import.meta.glob('./modules/**/*.ts')
@@ -29,6 +30,7 @@ const routes = [
   {
     path: '/',
     component: homeVue,
+    redirect: '/todolist',
   },
   {
     path: '/calendar',
@@ -43,8 +45,12 @@ const routes = [
     component: todolistVue,
   },
   {
+    path: '/searchForQQ',
+    component: searchForQQ,
+  },
+  {
     path: '/:w*',
-    component: ()=>import('@/views/noFound.vue'),
+    component: () => import('@/views/noFound.vue'),
   },
 ]
 

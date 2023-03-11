@@ -12,7 +12,7 @@ setInterval(() => {
   <t-aside>
     <t-menu theme="light" value="dashboard" style="margin-right: 50px" height="550px">
       <div class="block">
-        {{ clock.format('YY-MM-DD dddd HH:mm:ss') }}
+        {{ clock.format('YYYY-MM-DD dddd HH:mm:ss') }}
       </div>
       <router-link to="/">
         <t-menu-item value="home">
@@ -28,10 +28,13 @@ setInterval(() => {
           <template #icon>
             <t-icon name="bulletpoint" />
           </template>
+
+
+
           代办
         </t-menu-item>
       </router-link>
-      
+
       <router-link to="/calendar">
         <t-menu-item value="calendar">
           <template #icon>
@@ -47,6 +50,15 @@ setInterval(() => {
             <t-icon name="books" />
           </template>
           笔记
+        </t-menu-item>
+      </router-link>
+
+      <router-link to="/searchForQQ">
+        <t-menu-item value="searchForQQ">
+          <template #icon>
+            <t-icon name="logo-qq" />
+          </template>
+          searchForQQ
         </t-menu-item>
       </router-link>
 
