@@ -140,7 +140,7 @@ function deleteTodo(e, zone) {
   flex-shrink: 0;
   width: 100%;
   height: 60px;
-  padding: 0 5px 0 10px;
+  padding: 0 10px 0 10px;
   display: flex;
   justify-content: space-around;
   background-color: var(--color-blue);
@@ -150,6 +150,7 @@ function deleteTodo(e, zone) {
     font-size: 1.8em;
     font-weight: 700;
     color: #fff;
+    margin-right: 15px;
   }
 
   input {
@@ -157,7 +158,7 @@ function deleteTodo(e, zone) {
     line-height: 1.2em;
     flex: 1;
     padding: 5px;
-    margin: 0 15px;
+    margin-right: 15px;
     border-radius: 0.3em;
     box-shadow: inset 0 0 0.1em #222;
     font-size: 1.2em;
@@ -237,7 +238,6 @@ button {
   width: 5em;
   height: 2em;
   padding: 2px 5px;
-  margin-right: 10px;
   border: 0;
   background-color: #fff;
   border-radius: 0.5em;
@@ -267,5 +267,23 @@ button {
 ::-webkit-scrollbar-track {
   border-radius: 1px;
   background: #eee;
+}
+
+
+@media screen and (max-width: 500px) {
+  #app {
+    width: 100vw;
+    margin-left: 0;
+  }
+
+  .header {
+    width: 100vw;
+
+    p {
+      display: none;
+    }
+  }
+
+
 }
 </style>

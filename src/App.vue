@@ -23,6 +23,13 @@ import LayoutSideNav from '@/layouts/LayoutSideNav.vue'
 </script>
 
 <style lang="scss" scoped>
+@media screen and (max-width: 500px) {
+  .t-layout__sider {
+    width: 0;
+  }
+
+}
+
 .t-layout__content {
   height: 100vh;
 }
