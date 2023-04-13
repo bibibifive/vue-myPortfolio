@@ -38,8 +38,7 @@ onBeforeUnmount(() => {
 // const addtodo = refAll.addtodo
 
 
-function Addtodo(e) {
-  console.log(e);
+function Addtodo() {
   const text = addValue.value
   if (!text) return
   ingData.value.push(text)
@@ -103,7 +102,7 @@ onMounted(() => {
 
 <template>
   <div id="app">
-    <form class="header" @submit="$event=>Addtodo($event)">
+    <form class="header" @submit="Addtodo">
       <p>ToDolist</p>
       <input v-model.trim="addValue" type="text" placeholder="请输入ToDo" id="addtodo" />
       <button type="submit" class="add">添加</button>
