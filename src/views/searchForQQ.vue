@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue'
 import axios from 'axios'
-import { get } from 'lodash'
 
 
 let msg = ref({}) //载体对象

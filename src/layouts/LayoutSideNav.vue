@@ -12,7 +12,7 @@ setInterval(() => {
   <t-aside>
     <t-menu theme="light" value="dashboard" style="margin-right: 50px" height="550px">
       <div class="block">
-        {{ clock.format('YYYY-MM-DD dddd HH:mm:ss') }}
+        {{ clock.format('YY-MM-DD ddd HH:mm:ss') }}
       </div>
       <router-link to="/">
         <t-menu-item value="home">
@@ -28,9 +28,6 @@ setInterval(() => {
           <template #icon>
             <t-icon name="bulletpoint" />
           </template>
-
-
-
           代办
         </t-menu-item>
       </router-link>

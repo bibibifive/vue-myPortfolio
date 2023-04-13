@@ -1,6 +1,8 @@
 <script setup>
 import { ref, reactive, onMounted, onBeforeMount, onBeforeUnmount, getCurrentInstance } from 'vue'
 
+// todo: 导入生成todo
+// todo: 撤回
 // todo: 可修改现有todo
 // todo: 优先级
 // todo: 修改顺序
@@ -8,15 +10,12 @@ import { ref, reactive, onMounted, onBeforeMount, onBeforeUnmount, getCurrentIns
 // todo: 已删除列表(再次删除完全删除) (展开 收纳)
 
 // 申请localStorage空间
-localStorage.ingData == null && localStorage.setItem('ingData', ['提醒我定闹钟', '明天带伞'])
-localStorage.doneData == null && localStorage.setItem('doneData', ['今晚整理衣物'])
-
-console.log('ingData: ', localStorage.ingData.split(','))
-console.log('doneData: ', localStorage.doneData.split(','))
+localStorage.ingData == null && localStorage.setItem('ingData', '提醒我定闹钟,明天带伞')
+localStorage.doneData == null && localStorage.setItem('doneData', '今晚整理衣物')
 
 // 双区初始化
-const ingData = reactive(localStorage.ingData == '' ? [] : localStorage.ingData.split(','))
-const doneData = reactive(localStorage.doneData == '' ? [] : localStorage.doneData.split(','))
+let ingData = ref(localStorage.ingData == '' ? [] : localStorage.ingData.split(','))
+let doneData = ref(localStorage.doneData == '' ? [] : localStorage.doneData.split(','))
 // localStorage.clear()
 
 // 添加的代办内容
@@ -25,26 +24,25 @@ let addValue = ref('')
 // 刷新前保存修改
 window.addEventListener('beforeunload', (event) => {
   event.preventDefault()
-  localStorage.setItem('ingData', ingData)
-  localStorage.setItem('doneData', doneData)
+  localStorage.setItem('ingData', ingData.value)
+  localStorage.setItem('doneData', doneData.value)
 })
-
 // 卸载前时保存修改
 onBeforeUnmount(() => {
-  localStorage.setItem('ingData', ingData)
-  localStorage.setItem('doneData', doneData)
+  localStorage.setItem('ingData', ingData.value)
+  localStorage.setItem('doneData', doneData.value)
 })
 
+// ref绑定DOM
+// let refAll = getCurrentInstance().ctx.$refs
+// const addtodo = refAll.addtodo
 
-onMounted(() => {
-  // let refAll = getCurrentInstance().ctx.$refs
-  // const addtodo = refAll.addtodo
-})
 
-function Addtodo() {
+function Addtodo(e) {
+  console.log(e);
   const text = addValue.value
   if (!text) return
-  ingData.push(text)
+  ingData.value.push(text)
   addValue.value = null
 }
 
@@ -56,8 +54,8 @@ function zoneSwitch(e, zone) {
       return true
     }
   })
-  if (zone == ingData) doneData.push(text)
-  else ingData.push(text)
+  if (zone == ingData.value) doneData.value.push(text)
+  else ingData.value.push(text)
 }
 
 function deleteTodo(e, zone) {
@@ -70,19 +68,55 @@ function deleteTodo(e, zone) {
   })
 }
 
+function deleteAll() {
+  if (confirm('是否要清空')) doneData.value = []
+  else return
+}
+
+function upload_todolist() {
+  const newList_upload = upload.files[0]
+  const list_reader = new FileReader()
+  list_reader.onload = (proEvt) => {
+    let tmp = proEvt.target.result
+    tmp = tmp.trim().split('\n')
+    doneData.value.push(...ingData.value) //把待办全部推入结束
+    ingData.value = [] //置空代办
+    ingData.value.push(...tmp) //推入代办文件的文本
+  }
+  //将 Blob 或者 File 对象转根据特殊的编码格式转化为内容 (字符串形式)
+  // 这个方法是异步的，也就是说，只有当执行完成后才能够查看到结果，如果直接查看是无结果的，并返回 undefined
+  list_reader.readAsText(newList_upload)
+
+}
+
+onMounted(() => {
+  const upload = document.querySelector('#upload')
+})
+
+onMounted(() => {
+  console.log('ingData: ', localStorage.ingData.split(','))
+  console.log('doneData: ', localStorage.doneData.split(','))
+})
+
 
 </script>
 
 <template>
   <div id="app">
-    <div class="header">
+    <form class="header" @submit="$event=>Addtodo($event)">
       <p>ToDolist</p>
-      <input @keypress.enter="Addtodo()" v-model.trim="addValue" type="text" placeholder="请输入ToDo" id="addtodo" />
-      <button class="add" @click="Addtodo()">添加</button>
-    </div>
+      <input v-model.trim="addValue" type="text" placeholder="请输入ToDo" id="addtodo" />
+      <button type="submit" class="add">添加</button>
+      <button>
+        <label for="upload"><t-icon name="backtop" /></label>
+        <input @change="upload_todolist()" type="file" id="upload" name="upload"
+          accept="application/vnd.ms-excel, text/plain" style="display: none;">
+      </button>
+
+    </form>
     <div class="content">
       <div class="ing">
-        <h2>正在进行</h2>
+        <h2 class="ingZone">正在进行</h2>
         <ul>
           <li v-for="(todo, index) in ingData" :key="index">
             <input type="checkbox" @click="zoneSwitch($event, ingData)" />
@@ -101,7 +135,10 @@ function deleteTodo(e, zone) {
       </div>
 
       <div class="done">
-        <h2>已经完成</h2>
+        <div class="doneZone">
+          <h2>已经完成</h2>
+          <button @click="deleteAll()">清空</button>
+        </div>
         <ul>
           <li v-for="(todo, index) in doneData" :key="index">
             <input type="checkbox" @click="zoneSwitch($event, doneData)" checked />
@@ -142,7 +179,7 @@ function deleteTodo(e, zone) {
   height: 60px;
   padding: 0 10px 0 10px;
   display: flex;
-  justify-content: space-around;
+  // justify-content: space-around;
   background-color: var(--color-blue);
   align-items: center;
 
@@ -168,18 +205,26 @@ function deleteTodo(e, zone) {
 .content {
   flex-shrink: 1;
   width: 100%;
-  margin: 20px 0 0 5px;
+  margin: 20px 0 0 0;
   display: flex;
   flex-direction: column;
 
   .ing {
+    margin-left: 5px;
+
     li {
       border-left: 5px solid var(--color-blue);
     }
   }
 
   .done {
-    margin-top: 20px;
+    margin-left: 5px;
+    margin-top: 40px;
+
+    .doneZone {
+      display: flex;
+      justify-content: space-between;
+    }
 
     li {
       border-left: 5px solid var(--color-blue-light);
@@ -235,10 +280,12 @@ function deleteTodo(e, zone) {
 }
 
 button {
-  width: 5em;
+  // width: 5em;
+  width: fit-content;
   height: 2em;
   padding: 2px 5px;
   border: 0;
+  margin-left: 10px;
   background-color: #fff;
   border-radius: 0.5em;
   color: var(--color-blue);
@@ -246,7 +293,7 @@ button {
   cursor: pointer;
 
   &:hover {
-    filter: brightness(110%);
+    filter: brightness(95%);
   }
 }
 
