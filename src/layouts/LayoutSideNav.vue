@@ -1,3 +1,33 @@
+<template>
+  <t-aside>
+    <t-menu theme="light" value="dashboard" style="margin-right: 50px" height="550px">
+      <div class="block">
+        {{ clock.format('YY-MM-DD ddd HH:mm:ss') }}
+      </div>
+      <!-- <router-link to="/">
+          <t-menu-item value="home">
+            <template #icon>
+              <t-icon name="home" />
+            </template>
+            首页
+          </t-menu-item>
+        </router-link> -->
+
+      <router-link v-for="route in routes" :to=route.to>
+        <t-menu-item :value=route.value>
+          <template #icon>
+            <t-icon :name=route.iconName />
+          </template>
+          {{ route.title }}
+        </t-menu-item>
+      </router-link>
+
+    </t-menu>
+  </t-aside>
+</template>
+
+
+
 <script setup>
 import dayjs from 'dayjs'
 import { ref } from 'vue'
@@ -6,62 +36,52 @@ setInterval(() => {
   clock.value = clock.value == dayjs() ? clock.value : dayjs()
 }, 1000)
 
+const routes = [
+  {
+    to: '/',
+    value: 'home',
+    iconName: 'home',
+    title: '首页',
+  },
+  {
+    to: '/page',
+    value: 'page',
+    iconName: 'order-adjustment-column',
+    title: '分页',
+  },
+  {
+    to: '/todolist',
+    value: 'todolist',
+    iconName: 'bulletpoint',
+    title: '待办',
+  },
+  {
+    to: '/calendar',
+    value: 'calendar',
+    iconName: 'calendar',
+    title: '日历组件',
+  },
+  {
+    to: '/notes',
+    value: 'notes',
+    iconName: 'books',
+    title: '笔记',
+  },
+  {
+    to: '/searchForQQ',
+    value: 'searchForQQ',
+    iconName: 'logo-qq',
+    title: 'searchForQQ',
+  },
+  {
+    to: '/flex',
+    value: 'flex',
+    iconName: 'logo-windows',
+    title: '布局',
+  },
+]
+
 </script>
-
-<template>
-  <t-aside>
-    <t-menu theme="light" value="dashboard" style="margin-right: 50px" height="550px">
-      <div class="block">
-        {{ clock.format('YY-MM-DD ddd HH:mm:ss') }}
-      </div>
-      <router-link to="/">
-        <t-menu-item value="home">
-          <template #icon>
-            <t-icon name="home" />
-          </template>
-          首页
-        </t-menu-item>
-      </router-link>
-
-      <router-link to="/todolist">
-        <t-menu-item value="todolist">
-          <template #icon>
-            <t-icon name="bulletpoint" />
-          </template>
-          代办
-        </t-menu-item>
-      </router-link>
-
-      <router-link to="/calendar">
-        <t-menu-item value="calendar">
-          <template #icon>
-            <t-icon name="calendar" />
-          </template>
-          日历组件
-        </t-menu-item>
-      </router-link>
-
-      <router-link to="/notes">
-        <t-menu-item value="notes">
-          <template #icon>
-            <t-icon name="books" />
-          </template>
-          笔记
-        </t-menu-item>
-      </router-link>
-
-      <router-link to="/searchForQQ">
-        <t-menu-item value="searchForQQ">
-          <template #icon>
-            <t-icon name="logo-qq" />
-          </template>
-          searchForQQ
-        </t-menu-item>
-      </router-link>
-
-    </t-menu>
-  </t-aside>
-</template>
 
 
 <style lang="scss" scoped>

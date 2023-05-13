@@ -1,13 +1,14 @@
 <template>
-  笔记
+  <div>
+  </div>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
+
+<script setup>
+import { mock, Random } from 'mockjs'
+import NgridVue from './component/Ngrid.vue'
+
+</script>
+
+
+<style scoped></style> 

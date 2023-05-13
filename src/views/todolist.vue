@@ -37,11 +37,10 @@ onBeforeUnmount(() => {
 // let refAll = getCurrentInstance().ctx.$refs
 // const addtodo = refAll.addtodo
 
-
 function Addtodo() {
   const text = addValue.value
   if (!text) return
-  ingData.value.push(text)
+  ingData.value.unshift(text)
   addValue.value = null
 }
 
@@ -53,8 +52,8 @@ function zoneSwitch(e, zone) {
       return true
     }
   })
-  if (zone == ingData.value) doneData.value.push(text)
-  else ingData.value.push(text)
+  if (zone == ingData.value) doneData.value.unshift(text)
+  else ingData.value.unshift(text)
 }
 
 function deleteTodo(e, zone) {
@@ -85,7 +84,6 @@ function upload_todolist() {
   //将 Blob 或者 File 对象转根据特殊的编码格式转化为内容 (字符串形式)
   // 这个方法是异步的，也就是说，只有当执行完成后才能够查看到结果，如果直接查看是无结果的，并返回 undefined
   list_reader.readAsText(newList_upload)
-
 }
 
 onMounted(() => {
@@ -96,8 +94,6 @@ onMounted(() => {
   console.log('ingData: ', localStorage.ingData.split(','))
   console.log('doneData: ', localStorage.doneData.split(','))
 })
-
-
 </script>
 
 <template>
@@ -108,14 +104,19 @@ onMounted(() => {
       <button type="submit" class="add">添加</button>
       <button>
         <label for="upload"><t-icon name="backtop" /></label>
-        <input @change="upload_todolist()" type="file" id="upload" name="upload"
-          accept="application/vnd.ms-excel, text/plain" style="display: none;">
+        <input
+          @change="upload_todolist()"
+          type="file"
+          id="upload"
+          name="upload"
+          accept="application/vnd.ms-excel, text/plain"
+          style="display: none"
+        />
       </button>
-
     </form>
     <div class="content">
       <div class="ing">
-        <h2 class="ingZone">正在进行</h2>
+        <h2 class="ingZone">正在进行 {{ ingData.length }}</h2>
         <ul>
           <li v-for="(todo, index) in ingData" :key="index">
             <input type="checkbox" @click="zoneSwitch($event, ingData)" />
@@ -124,8 +125,16 @@ onMounted(() => {
               <svg width="25" height="25" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M15 12L16.2 5H31.8L33 12" stroke="#333" stroke-width="4" stroke-linejoin="round" />
                 <path d="M6 12H42" stroke="#333" stroke-width="4" stroke-linecap="round" />
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M37 12L35 43H13L11 12H37Z" fill="#333" stroke="#333"
-                  stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M37 12L35 43H13L11 12H37Z"
+                  fill="#333"
+                  stroke="#333"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
                 <path d="M19 35H29" stroke="#FFF" stroke-width="4" stroke-linecap="round" />
               </svg>
             </div>
@@ -135,7 +144,8 @@ onMounted(() => {
 
       <div class="done">
         <div class="doneZone">
-          <h2>已经完成</h2>
+          <h2>已经完成 {{ doneData.length }}</h2>
+          
           <button @click="deleteAll()">清空</button>
         </div>
         <ul>
@@ -146,8 +156,16 @@ onMounted(() => {
               <svg width="25" height="25" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M15 12L16.2 5H31.8L33 12" stroke="#333" stroke-width="4" stroke-linejoin="round" />
                 <path d="M6 12H42" stroke="#333" stroke-width="4" stroke-linecap="round" />
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M37 12L35 43H13L11 12H37Z" fill="#333" stroke="#333"
-                  stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M37 12L35 43H13L11 12H37Z"
+                  fill="#333"
+                  stroke="#333"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
                 <path d="M19 35H29" stroke="#FFF" stroke-width="4" stroke-linecap="round" />
               </svg>
             </div>
@@ -164,10 +182,9 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   font-family: 'pingfang sc', 'Courier New', Courier, monospace;
-  width: 500px;
+  width: 100%;
   height: 100vh;
   overflow-y: scroll;
-  margin-left: 10px;
   background-color: #fff;
 }
 
@@ -203,10 +220,15 @@ onMounted(() => {
 
 .content {
   flex-shrink: 1;
-  width: 100%;
-  margin: 20px 0 0 0;
+  width: 50%;
+  height: 100%;
+  margin: 20px 0 0 10px;
   display: flex;
   flex-direction: column;
+
+  background-color: rgb(239, 248, 255);
+  padding: 20px 5px;
+  border-radius: 10px;
 
   .ing {
     margin-left: 5px;
@@ -264,6 +286,12 @@ onMounted(() => {
   }
 }
 
+@media screen and (max-width: 500px) {
+  .content {
+    width: 100%;
+  }
+}
+
 // 零散样式...................................
 // .........................................
 
@@ -315,7 +343,6 @@ button {
   background: #eee;
 }
 
-
 @media screen and (max-width: 500px) {
   #app {
     width: 100vw;
@@ -329,7 +356,5 @@ button {
       display: none;
     }
   }
-
-
 }
 </style>

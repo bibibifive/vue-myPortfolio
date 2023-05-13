@@ -1,14 +1,14 @@
 <template>
-	<t-layout>
-		<layout-side-nav />
-		<t-content>
-			<router-view v-slot="{ Component }">
-				<keep-alive>
-					<component :is="Component" />
-				</keep-alive>
-			</router-view>
-		</t-content>
-	</t-layout>
+  <t-layout>
+    <layout-side-nav />
+    <t-content class="right">
+      <router-view v-slot="{ Component }">
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </router-view>
+    </t-content>
+  </t-layout>
 </template>
 
 <script setup>
@@ -17,20 +17,24 @@
 
 import LayoutSideNav from '@/layouts/LayoutSideNav.vue'
 
-	// import '@/style/layout.less';
+// import '@/style/layout.less';
 
-	// const route = useRoute()
+// const route = useRoute()
 </script>
 
 <style lang="scss" scoped>
 @media screen and (max-width: 500px) {
-	.t-layout__sider {
-		width: 0;
-	}
-
+  .t-layout__sider {
+    width: 0;
+  }
+}
+.right {
+  margin-left: 20px;
 }
 
-.t-layout__content {
-	height: 100vh;
+@media screen and (max-width: 500px) {
+  .right {
+    margin-left: 0;
+  }
 }
 </style>

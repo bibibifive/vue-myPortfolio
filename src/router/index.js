@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 import homeVue from '@/views/home.vue'
 import calendarVue from '@/views/calendar.vue'
+import pageVue from '@/views/page.vue'
 import notesVue from '@/views/notes.vue'
+import flexVue from '@/views/flex.vue'
 import todolistVue from '@/views/todolist.vue'
 import searchForQQ from '@/views/searchForQQ.vue'
 
@@ -30,7 +32,7 @@ const routes = [
   {
     path: '/',
     component: homeVue,
-    redirect: '/todolist',
+    redirect: '/page',
   },
   {
     path: '/calendar',
@@ -48,6 +50,14 @@ const routes = [
     path: '/searchForQQ',
     component: searchForQQ,
   },
+  {
+    path: '/flex',
+    component: flexVue,
+  },
+  {
+    path: '/page',
+    component: pageVue,
+  },  
   {
     path: '/:w*',
     component: () => import('@/views/noFound.vue'),
