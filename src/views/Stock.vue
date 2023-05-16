@@ -115,11 +115,11 @@ let data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122,
 
 let option = {
   title: {
-    text: '特性示例：渐变色 阴影 点击缩放',
-    subtext: 'Feature Sample: Gradient Color, Shadow, Click Zoom',
+    text: '特性示例：渐变色 点击缩放',
+    subtext: 'Feature Sample: Gradient Color, Click Zoom',
   },
   xAxis: {
-    data: data,
+    data: dataAxis,
     axisLabel: {
       inside: true,
       color: '#fff',
@@ -128,7 +128,7 @@ let option = {
       show: false,
     },
     axisLine: {
-      show: false,
+      show: true,
     },
     z: 10,
   },
@@ -137,7 +137,7 @@ let option = {
       show: false,
     },
     axisTick: {
-      show: false,
+      show: true,
     },
     axisLabel: {
       color: '#999',
@@ -181,8 +181,8 @@ onMounted(() => {
   myChart.on('click', function (params) {
     myChart.dispatchAction({
       type: 'dataZoom',
-      startValue: data[Math.max(params.dataIndex - ((zoomSize / 2) | 0), 0)],
-      endValue: data[Math.min(params.dataIndex + ((zoomSize / 2) | 0), data.length - 1)],
+      startValue: dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)],
+      endValue: dataAxis[Math.min(params.dataIndex + zoomSize / 2, data.length - 1)],
     })
   })
 

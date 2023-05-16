@@ -5,7 +5,7 @@ import pageVue from '@/views/page.vue'
 import notesVue from '@/views/notes.vue'
 import flexVue from '@/views/flex.vue'
 import todolistVue from '@/views/todolist.vue'
-import StockVue from '@/views/Stock.vue'
+// import stockVue from '@/views/stock.vue'
 import searchForQQ from '@/views/searchForQQ.vue'
 
 // 自动导入modules文件夹下所有ts文件
@@ -61,7 +61,7 @@ const routes = [
   },
   {
     path: '/stock',
-    component: StockVue,
+    component: () => import('@/views/stock.vue'),
   },  
   {
     path: '/:w*',
