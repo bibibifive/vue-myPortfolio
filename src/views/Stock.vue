@@ -210,7 +210,7 @@ onMounted(() => {
   grid: repeat(2, 50%) / auto-flow 50%;
   place-items: center;
   .eachBroad {
-    background-color: rgb(235, 227, 198);
+    // background-color: rgb(235, 227, 198);
     width: 100%;
     height: 100%;
     padding: 15px;
@@ -223,11 +223,5 @@ li {
   line-height: 1em;
 }
 
-.k {
-  color: rgb(146, 61, 0);
-}
 
-.v {
-  color: rgb(103, 0, 29);
-}
 </style>

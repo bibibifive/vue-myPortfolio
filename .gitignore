@@ -10,7 +10,6 @@ lerna-debug.log*
 node_modules
 nodeTest
 testBuild
-
 .DS_Store
 # dist
 dist-ssr
@@ -19,6 +18,7 @@ coverage
 
 /cypress/videos/
 /cypress/screenshots/
+
 
 # Editor directories and files
 .vscode/*
@@ -53,3 +53,5 @@ yarn.lock
 package-lock.json
 pnpm-lock.yaml
 
+
+stats.html
