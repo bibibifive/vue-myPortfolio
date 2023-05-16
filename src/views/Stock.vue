@@ -179,8 +179,6 @@ onMounted(() => {
   let myChart = echarts.init(chart_D1.value)
 
   myChart.on('click', function (params) {
-    console.log(params.dataIndex);
-    console.log(data[params.dataIndex]);
     myChart.dispatchAction({
       type: 'dataZoom',
       startValue: data[Math.max(params.dataIndex - ((zoomSize / 2) | 0), 0)],

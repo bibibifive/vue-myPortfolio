@@ -15,7 +15,7 @@ export default defineConfig({
   })],
   base: './',
   build: {
-    outDir: '../vue-myPortfolio-build',
+    outDir: './docs',
     // sourcemap:true,
   },
   resolve: {
