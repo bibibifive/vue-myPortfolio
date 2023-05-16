@@ -18,7 +18,6 @@
     "pinia-plugin-persistedstate": "^3.0.2",
     "tdesign-vue-next": "^1.0.6",
     "tvision-color": "^1.5.0",
-    "vite-plugin-compression": "^0.5.1",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
   },
