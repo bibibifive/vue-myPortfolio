@@ -1,40 +1,40 @@
 <template>
   <t-aside>
-    <t-menu theme="light" value="dashboard" style="margin-right: 50px" height="550px">
-      <div class="block">
+    <t-menu theme="light" value="dashboard">
+      <!-- <div class="block">
         {{ clock.format('YY-MM-DD ddd HH:mm:ss') }}
-      </div>
-      <!-- <router-link to="/">
-          <t-menu-item value="home">
-            <template #icon>
-              <t-icon name="home" />
-            </template>
-            首页
-          </t-menu-item>
-        </router-link> -->
+      </div> -->
 
-      <router-link v-for="route in routes" :to=route.to>
-        <t-menu-item :value=route.value>
+      <flipClock />
+
+      <router-link v-for="route in routes" :to="route.to">
+        <t-menu-item :value="route.value" v-if="route.origin">
           <template #icon>
-            <t-icon :name=route.iconName />
+            <iconpark-icon :name="route.iconName" size="20" fill="#888"></iconpark-icon>
+          </template>
+          <span style="margin-left: 8px"> {{ route.title }}</span>
+        </t-menu-item>
+
+        <t-menu-item :value="route.value" v-else>
+          <template #icon>
+            <t-icon :name="route.iconName" />
           </template>
           {{ route.title }}
         </t-menu-item>
       </router-link>
-
     </t-menu>
   </t-aside>
 </template>
 
-
-
 <script setup>
-import dayjs from 'dayjs'
-import { ref } from 'vue'
-let clock = ref(dayjs())
-setInterval(() => {
-  clock.value = clock.value == dayjs() ? clock.value : dayjs()
-}, 1000)
+// import dayjs from 'dayjs'
+// import { ref } from 'vue'
+// let clock = ref(dayjs())
+// setInterval(() => {
+//   clock.value = clock.value == dayjs() ? clock.value : dayjs()
+// }, 1000)
+
+import flipClock from '@/views/component/flipClock.vue'
 
 const routes = [
   {
@@ -79,12 +79,21 @@ const routes = [
     iconName: 'logo-windows',
     title: '布局',
   },
+  {
+    to: '/stock',
+    value: 'stock',
+    iconName: 'chart-stock',
+    title: '股市',
+    origin: 'iconpark',
+  },
 ]
-
 </script>
 
-
 <style lang="scss" scoped>
+
+.t-layout__sider{
+  height: 100vh;
+}
 .block {
   width: 100%;
   height: 20px;
@@ -94,6 +103,10 @@ const routes = [
 
 // @media (min-width: 1024px) {
 // }
+
+.t-menu__content {
+  margin-left: 20px;
+}
 
 section {
   height: 100vh;

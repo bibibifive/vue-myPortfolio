@@ -101,7 +101,7 @@ onMounted(() => {
     <form class="header" @submit="Addtodo">
       <p>ToDolist</p>
       <input v-model.trim="addValue" type="text" placeholder="请输入ToDo" id="addtodo" />
-      <button type="submit" class="add">添加</button>
+      <button type="submit">添加</button>
       <button>
         <label for="upload"><t-icon name="backtop" /></label>
         <input
@@ -145,7 +145,7 @@ onMounted(() => {
       <div class="done">
         <div class="doneZone">
           <h2>已经完成 {{ doneData.length }}</h2>
-          
+
           <button @click="deleteAll()">清空</button>
         </div>
         <ul>
@@ -180,6 +180,7 @@ onMounted(() => {
 #app {
   position: relative;
   display: flex;
+  align-items: flex-start;
   flex-direction: column;
   font-family: 'pingfang sc', 'Courier New', Courier, monospace;
   width: 100%;
@@ -190,20 +191,24 @@ onMounted(() => {
 
 // 全部header
 .header {
+  display: flex;
+  gap: 20px;
   flex-shrink: 0;
   width: 100%;
   height: 60px;
-  padding: 0 10px 0 10px;
-  display: flex;
+  padding: 0 20px;
   // justify-content: space-around;
   background-color: var(--color-blue);
   align-items: center;
+
+  button {
+    font-size: 20px;
+  }
 
   p {
     font-size: 1.8em;
     font-weight: 700;
     color: #fff;
-    margin-right: 15px;
   }
 
   input {
@@ -211,7 +216,6 @@ onMounted(() => {
     line-height: 1.2em;
     flex: 1;
     padding: 5px;
-    margin-right: 15px;
     border-radius: 0.3em;
     box-shadow: inset 0 0 0.1em #222;
     font-size: 1.2em;
@@ -220,13 +224,13 @@ onMounted(() => {
 
 .content {
   flex-shrink: 1;
-  width: 50%;
+  width: 30em;
   height: 100%;
   margin: 20px 0 0 10px;
   display: flex;
   flex-direction: column;
 
-  background-color: rgb(239, 248, 255);
+  background-color: rgb(245, 253, 255);
   padding: 20px 5px;
   border-radius: 10px;
 
@@ -263,8 +267,10 @@ onMounted(() => {
 
     p {
       flex: 1;
+      width: 10em;
+      text-overflow: ellipsis;
       padding: 0 10px;
-      line-height: 1.8em;
+      line-height: 2em;
       font-size: 1.4em;
     }
 
@@ -286,25 +292,8 @@ onMounted(() => {
   }
 }
 
-@media screen and (max-width: 500px) {
-  .content {
-    width: 100%;
-  }
-}
-
 // 零散样式...................................
 // .........................................
-
-// 右框边线
-.note,
-#user {
-  border-right: 1px solid #22222222;
-}
-
-// 下框边线
-.note_title {
-  border-bottom: 1px solid #22222222;
-}
 
 button {
   // width: 5em;
@@ -312,7 +301,6 @@ button {
   height: 2em;
   padding: 2px 5px;
   border: 0;
-  margin-left: 10px;
   background-color: #fff;
   border-radius: 0.5em;
   color: var(--color-blue);
@@ -322,11 +310,6 @@ button {
   &:hover {
     filter: brightness(95%);
   }
-}
-
-.hide {
-  margin: 0;
-  display: none;
 }
 
 ::-webkit-scrollbar {
@@ -343,18 +326,15 @@ button {
   background: #eee;
 }
 
-@media screen and (max-width: 500px) {
-  #app {
-    width: 100vw;
-    margin-left: 0;
-  }
-
+@media screen and (max-width: 700px) {
   .header {
     width: 100vw;
-
     p {
       display: none;
     }
+  }
+  .content {
+    width: 100%;
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <t-layout>
+  <t-layout class="appmokuai">
     <layout-side-nav />
     <t-content class="right">
       <router-view v-slot="{ Component }">
@@ -23,18 +23,21 @@ import LayoutSideNav from '@/layouts/LayoutSideNav.vue'
 </script>
 
 <style lang="scss" scoped>
-@media screen and (max-width: 500px) {
-  .t-layout__sider {
-    width: 0;
-  }
+.appmokuai {
+  display: absolute;
 }
+
 .right {
   margin-left: 20px;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 700px) {
+  .appmokuai {
+    left: -231px;
+  }
   .right {
     margin-left: 0;
+    width: 100vw;
   }
 }
 </style>

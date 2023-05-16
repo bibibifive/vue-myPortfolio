@@ -1,10 +1,11 @@
-import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import homeVue from '@/views/home.vue'
 import calendarVue from '@/views/calendar.vue'
 import pageVue from '@/views/page.vue'
 import notesVue from '@/views/notes.vue'
 import flexVue from '@/views/flex.vue'
 import todolistVue from '@/views/todolist.vue'
+import StockVue from '@/views/Stock.vue'
 import searchForQQ from '@/views/searchForQQ.vue'
 
 // 自动导入modules文件夹下所有ts文件
@@ -35,6 +36,10 @@ const routes = [
     redirect: '/page',
   },
   {
+    path: '/page',
+    component: pageVue,
+  },  
+  {
     path: '/calendar',
     component: calendarVue,
   },
@@ -55,8 +60,8 @@ const routes = [
     component: flexVue,
   },
   {
-    path: '/page',
-    component: pageVue,
+    path: '/stock',
+    component: StockVue,
   },  
   {
     path: '/:w*',
