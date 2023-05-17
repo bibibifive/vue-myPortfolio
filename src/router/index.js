@@ -33,7 +33,7 @@ const routes = [
   {
     path: '/',
     component: homeVue,
-    redirect: '/page',
+    redirect: '/todolist',
   },
   {
     path: '/page',

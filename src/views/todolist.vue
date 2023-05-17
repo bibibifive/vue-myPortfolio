@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, onMounted, onBeforeMount, onBeforeUnmount, getCurrentInstance } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 
 // todo: 导入生成todo
 // todo: 撤回
@@ -102,17 +102,17 @@ onMounted(() => {
       <p>ToDolist</p>
       <input v-model.trim="addValue" type="text" placeholder="请输入ToDo" id="addtodo" />
       <button type="submit">添加</button>
-      <button>
-        <label for="upload"><t-icon name="backtop" /></label>
-        <input
-          @change="upload_todolist()"
-          type="file"
-          id="upload"
-          name="upload"
-          accept="application/vnd.ms-excel, text/plain"
-          style="display: none"
-        />
-      </button>
+      <label for="upload" class="labelButton">
+          <iconpark-icon name="folder-upload"></iconpark-icon>
+      </label>
+      <input
+        @change="upload_todolist()"
+        type="file"
+        id="upload"
+        name="upload"
+        accept="application/vnd.ms-excel, text/plain"
+        style="display: none"
+      />
     </form>
     <div class="content">
       <div class="ing">
@@ -295,11 +295,13 @@ onMounted(() => {
 // 零散样式...................................
 // .........................................
 
-button {
+button,.labelButton {
   // width: 5em;
+  display: flex;
+  align-items: center;
   width: fit-content;
   height: 2em;
-  padding: 2px 5px;
+  padding: 2px 10px;
   border: 0;
   background-color: #fff;
   border-radius: 0.5em;

@@ -113,7 +113,7 @@ const getTableData = (base) => {
       <t-row>
         <t-col :span="4">
           <t-space>
-            <t-button>导出 Excel</t-button>
+            <!-- <t-button>导出 Excel</t-button> -->
           </t-space>
         </t-col>
         <t-col :span="4"> </t-col>
