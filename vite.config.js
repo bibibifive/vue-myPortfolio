@@ -19,7 +19,7 @@ export default defineConfig({
   ],
   base: './',
   build: {
-    outDir: './testBuild',
+    outDir: './docs',
     // sourcemap:true,
   },
   resolve: {
