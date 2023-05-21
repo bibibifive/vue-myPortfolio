@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch, watchEffect } from 'vue'
+import { computed, ref } from 'vue'
 import { MessagePlugin } from 'tdesign-vue-next'
 
 const current = ref(1) //当前页
@@ -65,9 +65,6 @@ const totalData = computed(() => {
   return tmpData
 })
 
-
-
-
 const getTableData = (base) => {
   let [page = 1, pageSize = 10, totalData] = base
 
@@ -105,6 +102,8 @@ const getTableData = (base) => {
   }
   return tableData.data
 }
+
+import { exportExcel, objectToArray, objectToArray_forheader } from '@/utils/excel'
 </script>
 
 <template>
@@ -113,7 +112,12 @@ const getTableData = (base) => {
       <t-row>
         <t-col :span="4">
           <t-space>
-            <!-- <t-button>导出 Excel</t-button> -->
+            <t-button
+              @click="
+                exportExcel([objectToArray_forheader(columns, 'title'), ...objectToArray(data, 'include', ['index'])])
+              "
+              >导出 Excel</t-button
+            >
           </t-space>
         </t-col>
         <t-col :span="4"> </t-col>
