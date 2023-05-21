@@ -83,7 +83,7 @@ const routes = [
     to: '/stock',
     value: 'stock',
     iconName: 'chart-stock',
-    title: '股市',
+    title: 'echart',
     origin: 'iconpark',
   },
 ]
