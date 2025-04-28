@@ -60,6 +60,10 @@ const routes = [
     component: flexVue,
   },
   {
+    path: '/stock',
+    component: () => import('@/views/stock.vue'),
+  },  
+  {
     path: '/:w*',
     component: () => import('@/views/noFound.vue'),
   },
