@@ -18,10 +18,6 @@ export default defineConfig({
     visualizer(),
   ],
   base: './',
-  build: {
-    outDir: './docs',
-    // sourcemap:true,
-  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
